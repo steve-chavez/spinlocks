@@ -10,7 +10,7 @@ struct spinlock {
 };
 
 void lock(struct spinlock* spinlock) {
-	while (!atomic_compare_exchange_strong(&spinlock->locked, &expected, 1));
+	while (!atomic_exchange(&spinlock->locked, 1));
 }
 
 void unlock(struct spinlock* spinlock) {
