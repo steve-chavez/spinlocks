@@ -6,8 +6,22 @@ let
   };
 in with import nixpkgs {};
 mkShell {
-  buildInputs = [
+  buildInputs =
+  let
+    benchScript = writeShellScriptBin "spinlock-bench" ''
+      time $1
+      time $1 2
+      time $1 4
+      time $1 8
+    '';
+    statScript = writeShellScriptBin "spinlock-stat" ''
+      perf stat -d $1 8
+    '';
+  in
+  [
     linuxPackages.perf gcc
+    benchScript
+    statScript
   ];
   shellHook = ''
   '';
