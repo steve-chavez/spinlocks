@@ -1,24 +1,23 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <threads.h>
 #include <stdlib.h>
 #include <stdatomic.h>
 
-static int expected = 0;
-
 struct spinlock {
-	int locked;
+	bool locked;
 };
 
 void lock(struct spinlock* spinlock) {
 	while(1){
-		if (!atomic_exchange(&spinlock->locked, 1)) return;
+		if (!atomic_exchange(&spinlock->locked, true)) return;
 
 		while(atomic_load(&spinlock->locked));
 	}
 }
 
 void unlock(struct spinlock* spinlock) {
-	atomic_store(&spinlock->locked, 0);
+	atomic_store(&spinlock->locked, false);
 }
 
 typedef struct thread_args {

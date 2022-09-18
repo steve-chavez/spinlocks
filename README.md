@@ -45,7 +45,7 @@ The count is: 279345
 
 ```
 
-## Locally spinnig
+## Locally spinning
 
 ```
 spinlock-bench ./spinlockally.o
