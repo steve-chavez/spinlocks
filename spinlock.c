@@ -3,20 +3,18 @@
 #include <stdlib.h>
 #include <stdatomic.h>
 
-#define NTHREADS 1
-
 static int expected = 0;
 
 struct spinlock {
-	int lock;
+	int locked;
 };
 
-void spinlock_lock(struct spinlock* spinlock) {
-	while (!atomic_compare_exchange_strong(&spinlock->lock, &expected, 1));
+void lock(struct spinlock* spinlock) {
+	while (!atomic_compare_exchange_strong(&spinlock->locked, &expected, 1));
 }
 
-void spinlock_unlock(struct spinlock* spinlock) {
-	atomic_store(&spinlock->lock, 0);
+void unlock(struct spinlock* spinlock) {
+	atomic_store(&spinlock->locked, 0);
 }
 
 typedef struct thread_args {
@@ -27,28 +25,29 @@ typedef struct thread_args {
 int inc(void* args) {
 	thread_args* targs = args;
 	for (int i = 0; i < 100000; i++) {
-			spinlock_lock(targs->slock);
+			lock(targs->slock);
 			(*targs->count)++;
-			spinlock_unlock(targs->slock);
+			unlock(targs->slock);
 	}
 	return EXIT_SUCCESS;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 	struct spinlock slock = { 0 };
 	int count = 0;
+	int nthreads = argv[1]? atoi(argv[1]): 1;
 
-	thrd_t threads[NTHREADS];
+	thrd_t threads[nthreads];
 	thread_args args = { .slock = &slock, .count = &count };
 
-	for (int i = 0; i < NTHREADS; ++i) {
+	for (int i = 0; i < nthreads; ++i) {
 			int rc = thrd_create(&threads[i], inc, &args);
 			if (rc == thrd_error) {
 					printf("ERROR: thrd_create() failed\n");
 					exit(EXIT_FAILURE);
 			}
 	}
-	for (int i = 0; i < NTHREADS; ++i) {
+	for (int i = 0; i < nthreads; ++i) {
 			int rc = thrd_join(threads[i], NULL);
 			if (rc == thrd_error) {
 					printf("ERROR: thrd_join() failed\n");
