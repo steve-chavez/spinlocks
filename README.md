@@ -6,43 +6,47 @@
 spinlock-bench ./spinlock.o
 The count is: 100000
 
-real    0m0.005s
+real    0m0.009s
 user    0m0.005s
-sys     0m0.000s
-The count is: 104474
-
-real    0m0.028s
-user    0m0.051s
 sys     0m0.004s
-The count is: 218520
+The count is: 200000
 
-real    0m0.040s
-user    0m0.147s
+real    0m0.023s
+user    0m0.044s
 sys     0m0.000s
-The count is: 270853
+The count is: 400000
 
-real    0m0.116s
-user    0m0.868s
-sys     0m0.004s
+real    0m0.103s
+user    0m0.392s
+sys     0m0.000s
+The count is: 800000
+
+real    0m0.478s
+user    0m3.658s
+sys     0m0.000s
 
 spinlock-stat ./spinlock.o
-The count is: 279345
+The count is: 800000
 
  Performance counter stats for './spinlock.o 8':
 
-            867.22 msec task-clock:u              #    7.547 CPUs utilized
+          3,971.95 msec task-clock:u              #    7.469 CPUs utilized
                  0      context-switches:u        #    0.000 K/sec
                  0      cpu-migrations:u          #    0.000 K/sec
-                75      page-faults:u             #    0.086 K/sec
-     1,715,099,500      cycles:u                  #    1.978 GHz                      (59.45%)
-        16,542,924      instructions:u            #    0.01  insn per cycle           (73.14%)
-         5,155,588      branches:u                #    5.945 M/sec                    (75.14%)
-           539,935      branch-misses:u           #   10.47% of all branches          (77.49%)
-         7,136,885      L1-dcache-loads:u         #    8.230 M/sec                    (77.86%)
-         2,859,563      L1-dcache-load-misses:u   #   40.07% of all L1-dcache hits    (77.86%)
-         1,002,921      LLC-loads:u               #    1.156 M/sec                    (48.70%)
-                 0      LLC-load-misses:u         #    0.00% of all LL-cache hits     (47.03%)
+                71      page-faults:u             #    0.018 K/sec
+     8,174,888,035      cycles:u                  #    2.058 GHz                      (61.85%)
+        68,128,831      instructions:u            #    0.01  insn per cycle           (74.56%)
+        18,262,842      branches:u                #    4.598 M/sec                    (74.78%)
+           832,278      branch-misses:u           #    4.56% of all branches          (75.25%)
+        19,736,218      L1-dcache-loads:u         #    4.969 M/sec                    (75.59%)
+         8,759,096      L1-dcache-load-misses:u   #   44.38% of all L1-dcache hits    (75.64%)
+         1,235,026      LLC-loads:u               #    0.311 M/sec                    (49.92%)
+               252      LLC-load-misses:u         #    0.02% of all LL-cache hits     (49.59%)
 
+       0.531788030 seconds time elapsed
+
+       3.969189000 seconds user
+       0.004009000 seconds sys
 ```
 
 ## Locally spinning

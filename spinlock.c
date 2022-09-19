@@ -9,7 +9,7 @@ struct spinlock {
 };
 
 void lock(struct spinlock* spinlock) {
-	while (!atomic_exchange(&spinlock->locked, true));
+	while (atomic_exchange(&spinlock->locked, true));
 }
 
 void unlock(struct spinlock* spinlock) {
