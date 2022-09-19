@@ -1,6 +1,19 @@
 # Spinlocks
 
+Just some experiments with spinlocks, done in C99. Using this [excellent playlist by CoffeeBeforeArch on youtube](https://www.youtube.com/playlist?list=PLxNPSjHT5qvsZyes3ATYvhPhwkoY33L2v).
+
+## Setup
+
+You'll need to install [Nix](https://nixos.org/download) to try these. I tried to install the `perf` command with `apt` and failed miserably. Nix makes that easy plus with `nix-shell` it's only available for this project.
+
+Then do:
+
+```
+$ nix-shell
+```
+
 ## Naive
+
 
 ```
 make spinlock
@@ -155,5 +168,61 @@ The count is: 800000
 
 real    0m0.117s
 user    0m0.875s
+sys     0m0.000s
+```
+
+## pthread spinlock
+
+```
+make spinlock_pthread
+
+spinlock-bench ./spinlock_pthread.o
+The count is: 100000
+
+real    0m0.002s
+user    0m0.002s
+sys     0m0.000s
+The count is: 200000
+
+real    0m0.005s
+user    0m0.008s
+sys     0m0.000s
+The count is: 400000
+
+real    0m0.017s
+user    0m0.051s
+sys     0m0.004s
+The count is: 800000
+
+real    0m0.040s
+user    0m0.252s
+sys     0m0.000s
+```
+
+## Exponential backoff
+
+```
+make spinlock_exp_backoff
+
+spinlock-bench ./spinlock_exp_backoff.o
+The count is: 100000
+
+real    0m0.006s
+user    0m0.006s
+sys     0m0.000s
+The count is: 200000
+
+real    0m0.012s
+user    0m0.014s
+sys     0m0.005s
+The count is: 400000
+
+real    0m0.012s
+user    0m0.039s
+sys     0m0.000s
+The count is: 800000
+
+real    0m0.018s
+user    0m0.102s
 sys     0m0.000s
 ```
