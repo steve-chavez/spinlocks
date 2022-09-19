@@ -3,6 +3,8 @@
 ## Naive
 
 ```
+make spinlock
+
 spinlock-bench ./spinlock.o
 The count is: 100000
 
@@ -52,6 +54,8 @@ The count is: 800000
 ## Locally spinning
 
 ```
+make spinlockally
+
 spinlock-bench ./spinlockally.o
 The count is: 100000
 
@@ -96,4 +100,60 @@ The count is: 800000
 
        2.149269000 seconds user
        0.004017000 seconds sys
+```
+
+## Active backoff
+
+```
+make spinlock_active_backoff
+
+spinlock-bench ./spinlock_active_backoff.o
+The count is: 100000
+
+real    0m0.005s
+user    0m0.005s
+sys     0m0.000s
+The count is: 200000
+
+real    0m0.012s
+user    0m0.020s
+sys     0m0.000s
+The count is: 400000
+
+real    0m0.033s
+user    0m0.126s
+sys     0m0.000s
+The count is: 800000
+
+real    0m0.123s
+user    0m0.894s
+sys     0m0.000s
+```
+
+## Passive backoff
+
+```
+make spinlock_passive_backoff
+
+spinlock-bench ./spinlock_passive_backoff.o
+The count is: 100000
+
+real    0m0.005s
+user    0m0.005s
+sys     0m0.000s
+The count is: 200000
+
+real    0m0.018s
+user    0m0.034s
+sys     0m0.000s
+The count is: 400000
+
+real    0m0.040s
+user    0m0.156s
+sys     0m0.000s
+The count is: 800000
+
+real    0m0.117s
+user    0m0.875s
+sys     0m0.000s
 ```
