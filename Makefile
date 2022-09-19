@@ -15,3 +15,6 @@ spinlock_passive_backoff: spinlock_passive_backoff.c
 
 spinlock_exp_backoff: spinlock_exp_backoff.c
 	gcc -pthread -o spinlock_exp_backoff.o spinlock_exp_backoff.c
+
+spinlock_pthread: spinlock_pthread.c
+	gcc -pthread -o spinlock_pthread.o spinlock_pthread.c
